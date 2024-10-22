@@ -1,5 +1,7 @@
 import { faker } from '@faker-js/faker'
-const dummy = faker.airline.airport().iataCode
-const personName = faker.person.fullName()
-const bio = faker.person.bio()
-console.log(`Hi my name is ${personName}. Here is my bio: ${bio}`)
+import { createClient } from '@supabase/supabase-js'
+
+// Create a single supabase client for interacting with your database
+const supabase = createClient(process.env.VITE_SUPABASE_URL, process.env.SERVICE_ROLE_KEY)
+
+console.log(supabase)
