@@ -20,7 +20,9 @@ const projects = ref<any[] | null>(null)
       go to project 1
       <RouterLink :to="{ name: '/projects/[id]', params: { id: '1' } }">Click Here</RouterLink>
     </div>
-    {{ projects ? projects[0] : '' }}
+    <ul>
+      <li v-for="project in projects" :key="project.id">{{ projects }}</li>
+    </ul>
   </div>
 </template>
 
