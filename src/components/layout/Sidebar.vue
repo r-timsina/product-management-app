@@ -1,5 +1,41 @@
 <script setup lang="ts">
 import 'iconify-icon'
+import SidebarLinks from '@/components/layout/SidebarLinks.vue'
+
+const links = [
+  {
+    title: 'Dashboard',
+    icon: 'lucide:house',
+    to: '/'
+  },
+  {
+    title: 'Projects',
+    icon: 'lucide:building-2',
+    to: '/projects'
+  },
+  {
+    title: 'My Tasks',
+    icon: 'lucide:badge-check',
+    to: '/tasks'
+  }
+]
+const accountLinks = [
+  {
+    title: 'Profile',
+    icon: 'lucide:user',
+    to: '/profile'
+  },
+  {
+    title: 'Settings',
+    icon: 'lucide:settings',
+    to: '/settings'
+  },
+  {
+    title: 'Sign out',
+    icon: 'lucide:log-out',
+    to: '/signout'
+  }
+]
 </script>
 <template>
   <aside
@@ -17,51 +53,11 @@ import 'iconify-icon'
 
     <nav class="flex flex-col gap-2 justify-between h-full relative">
       <div>
-        <RouterLink
-          to="/"
-          class="flex items-center gap-3 px-4 py-2 mx-2 transition-colors rounded-lg hover:text-primary justify-center lg:justify-normal text-muted-foreground"
-        >
-          <iconify-icon icon="lucide:house"></iconify-icon>
-          <span class="hidden lg:block text-nowrap">Dashboard</span>
-        </RouterLink>
-        <RouterLink
-          to="/projects"
-          class="flex items-center gap-3 px-4 py-2 mx-2 transition-colors rounded-lg hover:text-primary justify-center lg:justify-normal text-muted-foreground"
-        >
-          <iconify-icon icon="lucide:building-2"></iconify-icon>
-          <span class="hidden lg:block text-nowrap">Projects</span>
-        </RouterLink>
-        <RouterLink
-          to="/tasks"
-          class="flex items-center gap-3 px-4 py-2 mx-2 transition-colors rounded-lg hover:text-primary justify-center lg:justify-normal text-muted-foreground"
-        >
-          <iconify-icon icon="lucide:badge-check"></iconify-icon>
-          <span class="hidden lg:block text-nowrap">My Tasks</span>
-        </RouterLink>
+        <SidebarLinks :Links="links" />
       </div>
 
       <div class="border-y text-center bg-background py-3">
-        <RouterLink
-          to="/profile"
-          class="flex items-center gap-3 px-4 py-2 mx-2 transition-colors rounded-lg hover:text-primary justify-center lg:justify-normal text-muted-foreground"
-        >
-          <iconify-icon icon="lucide:user"></iconify-icon>
-          <span class="hidden lg:block text-nowrap">Profile</span>
-        </RouterLink>
-        <RouterLink
-          to="/settings"
-          class="flex items-center gap-3 px-4 py-2 mx-2 transition-colors rounded-lg hover:text-primary justify-center lg:justify-normal text-muted-foreground"
-        >
-          <iconify-icon icon="lucide:settings"></iconify-icon>
-          <span class="hidden lg:block text-nowrap">Settings</span>
-        </RouterLink>
-        <RouterLink
-          to="/signout"
-          class="flex items-center gap-3 px-4 py-2 mx-2 transition-colors rounded-lg hover:text-primary justify-center lg:justify-normal text-muted-foreground"
-        >
-          <iconify-icon icon="lucide:log-out"></iconify-icon>
-          <span class="hidden lg:block text-nowrap">Sign out</span>
-        </RouterLink>
+        <SidebarLinks :Links="accountLinks" />
       </div>
     </nav>
   </aside>
