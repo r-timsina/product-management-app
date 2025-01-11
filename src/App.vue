@@ -1,29 +1,15 @@
-<script setup lang="ts">
-import { set } from '@vueuse/core'
-
-const MocComponent = defineComponent(async () => {
-  const greeting = ref('Hello')
-
-  await new Promise((resolve) => {
-    greeting.value = 'Hello from the database'
-
-    setTimeout(() => {
-      resolve(true)
-    }, 1000)
-  })
-  return () => h('p', greeting.value)
-})
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <MocComponent />
   <AuthLayout>
-    <Suspense>
-      <MocComponent />
-      <template #fallback>
-        <span>Loading...</span>
-      </template>
-    </Suspense>
-    <RouterView />
+    <RouterView v-slot="{ Component, route }">
+      <Suspense v-if="Component" :timeout="0">
+        <Component :is="Component" :key="route.name" />
+
+        <template #fallback>
+          <span>Loading...</span>
+        </template>
+      </Suspense>
+    </RouterView>
   </AuthLayout>
 </template>
