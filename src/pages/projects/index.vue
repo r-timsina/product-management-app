@@ -6,14 +6,14 @@ import type { ColumnDef } from '@tanstack/vue-table'
 import { RouterLink } from 'vue-router'
 
 const projects = ref<Tables<'projects'>[] | null>(null)
-;(async () => {
+const getProjects = async () => {
   const { data, error } = await supabase.from('projects').select()
   projects.value = data
   if (error) {
     console.log(error)
   }
-  // console.log('Projects: ', projects.value)
-})()
+}
+await getProjects()
 
 const columns: ColumnDef<Tables<'projects'>>[] = [
   {
