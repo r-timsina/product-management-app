@@ -1,20 +1,36 @@
 <script setup lang="ts">
-const route = useRoute()
+import { taskQuery, type Task } from '@/utils/supaQueries'
+
+const route = useRoute('/tasks/[id]')
+
+const task = ref<Task | null>(null)
+
+watch(
+  () => task.value?.name,
+  () => {
+    usePageStore().pageData.title = `Task: ${task.value?.name || ''}`
+  }
+)
+
+const getTasks = async () => {
+  const { data, error } = await taskQuery(route.params.id)
+  if (error) {
+    console.log(error)
+  }
+  task.value = data
+}
+await getTasks()
 </script>
 <template>
   <Table>
     <TableRow>
       <TableHead> Name </TableHead>
-      <TableCell> Lorem ipsum dolor sit amet. </TableCell>
+      <TableCell> {{ task?.name }} </TableCell>
     </TableRow>
     <TableRow>
       <TableHead> Description </TableHead>
       <TableCell>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad iure qui tempora ex nihil, ab
-        reprehenderit dolorem sunt veritatis perferendis? Repudiandae quis velit quasi ab natus quia
-        ratione voluptas deserunt labore sed distinctio nam fuga fugit vero voluptates placeat
-        aperiam, saepe excepturi eos harum consectetur doloremque perspiciatis nesciunt! Incidunt,
-        modi.
+        {{ task?.description }}
       </TableCell>
     </TableRow>
     <TableRow>
@@ -23,11 +39,15 @@ const route = useRoute()
     </TableRow>
     <TableRow>
       <TableHead> Project </TableHead>
+      <TableCell>{{ task?.projects?.name }}</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableHead> Project </TableHead>
       <TableCell> Lorem ipsum. </TableCell>
     </TableRow>
     <TableRow>
       <TableHead> Status </TableHead>
-      <TableCell>In progress</TableCell>
+      <TableCell>{{ task?.status }}</TableCell>
     </TableRow>
     <TableRow>
       <TableHead> Collaborators </TableHead>
@@ -35,8 +55,8 @@ const route = useRoute()
         <div class="flex">
           <Avatar
             class="-mr-4 border border-primary hover:scale-110 transition-transform"
-            v-for="n in 5"
-            :key="n"
+            v-for="collab in task?.collaborators"
+            :key="collab"
           >
             <RouterLink class="w-full h-full flex items-center justify-center" to="">
               <AvatarImage src="" alt="" />
