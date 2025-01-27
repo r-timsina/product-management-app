@@ -1,6 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import AppErrorPage from '@/components/AppError/AppErrorPage.vue'
+</script>
 
 <template>
-  <div>This is a 404 Page</div>
+  <AppErrorPage />
 </template>
-<style></style>
+
+<style scoped></style>
