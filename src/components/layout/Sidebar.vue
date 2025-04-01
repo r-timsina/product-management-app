@@ -49,11 +49,11 @@ const accountLinks = [
 
     <nav class="flex flex-col gap-2 justify-between h-full relative">
       <div>
-        <SidebarLinks :Links="links" />
+        <SidebarLinks :links="links" />
       </div>
 
       <div class="border-y text-center bg-background py-3">
-        <SidebarLinks :Links="accountLinks" />
+        <SidebarLinks :links="accountLinks" />
       </div>
     </nav>
   </aside>
