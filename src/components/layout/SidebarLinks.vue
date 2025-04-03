@@ -8,25 +8,23 @@ interface LinkProp {
 const props = defineProps<{
   links: LinkProp[]
 }>()
-
-const filteredLinks = props.links.filter((link): link is LinkProp & { to: string } => !!link.to)
 </script>
 <template>
-  <RouterLink
-    exact-active-class="text-primary bg-muted"
-    v-for="link in filteredLinks"
-    :key="link.title"
-    :to="link.to"
-    class="nav-link"
-  >
-    <iconify-icon :icon="link.icon"></iconify-icon>
-    <span class="hidden lg:block text-nowrap">{{ link.title }}</span>
-  </RouterLink>
-  <div class="nav-link cursor-pointer">
-    <!-- <iconify-icon :icon="link.icon"></iconify-icon>
-    <span class="hidden lg:block text-nowrap">{{ link.title }}</span> -->
-    testse
-  </div>
+  <template v-for="link in links" :key="link.title">
+    <RouterLink
+      v-if="link.to"
+      exact-active-class="text-primary bg-muted"
+      :to="link.to"
+      class="nav-link"
+    >
+      <iconify-icon :icon="link.icon"></iconify-icon>
+      <span class="hidden lg:block text-nowrap">{{ link.title }}</span>
+    </RouterLink>
+    <div v-else class="nav-link cursor-pointer">
+      <iconify-icon :icon="link.icon"></iconify-icon>
+      <span class="hidden lg:block text-nowrap">{{ link.title }}</span>
+    </div>
+  </template>
 </template>
 <style scoped>
 .nav-link {
