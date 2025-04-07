@@ -4,7 +4,9 @@ import { useErrorStore } from '@/stores/error'
 
 const errorStore = useErrorStore()
 
-onMounted(async () => {})
+onMounted(async () => {
+  useAuthStore().trackAuthChanges()
+})
 
 onErrorCaptured((error) => {
   errorStore.setError({ error })
