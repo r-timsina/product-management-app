@@ -1,7 +1,6 @@
 import { supabase } from '@/lib/supabaseClient'
 import { profileQuery } from '@/utils/supaQueries'
 import type { Session, User } from '@supabase/supabase-js'
-import type { profile } from 'console'
 import type { Tables } from 'database/types'
 
 export const useAuthStore = defineStore('auth-store', () => {
@@ -14,9 +13,10 @@ export const useAuthStore = defineStore('auth-store', () => {
       profile.value = null
       return
     }
-    if (!profile.value || profile.value.id !== user.value.id) {
-      const { data } = await profileQuery(user.value.id)
 
+    if (!profile.value || profile.value.id !== user.value.id) {
+      const data = await profileQuery(user.value.id) // data was destructured at first or as per per instruction but because of login error I mannually changed it to data. Need to solve further.
+      console.log(data)
       profile.value = data || null
     }
   }
@@ -27,17 +27,19 @@ export const useAuthStore = defineStore('auth-store', () => {
       profile.value = null
       return
     }
+
     user.value = userSession.user
     await setProfile()
   }
 
   const getSession = async () => {
     const { data } = await supabase.auth.getSession()
-    if (data.session?.user) await setAuth(data.session)
+    if (data?.session?.user) await setAuth(data.session)
   }
 
   const trackAuthChanges = () => {
     if (isTrackingAuthChanges.value) return
+
     isTrackingAuthChanges.value = true
     supabase.auth.onAuthStateChange((event, session) => {
       setTimeout(async () => {
