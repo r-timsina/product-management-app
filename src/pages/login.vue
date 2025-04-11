@@ -8,12 +8,11 @@ const formData = ref({
   password: ''
 })
 
-const _error = ref('')
+const { serverError, handleServerError } = useFormErrors()
 const signin = async () => {
   const { error } = await login(formData.value)
   if (!error) return router.push('/')
-  _error.value =
-    error.message === 'Invalid login credentials' ? 'Incorrect email or password' : error.message
+  handleServerError(error)
 }
 </script>
 
@@ -38,7 +37,7 @@ const signin = async () => {
               type="email"
               placeholder="johndoe19@example.com"
               required
-              :class="{ 'border-red-500': _error }"
+              :class="{ 'border-red-500': serverError }"
             />
           </div>
           <div class="grid gap-2">
@@ -52,11 +51,11 @@ const signin = async () => {
               type="password"
               autocomplete
               required
-              :class="{ 'border-red-500': _error }"
+              :class="{ 'border-red-500': serverError }"
             />
           </div>
-          <ul class="text-sm text-red-500 text-left" v-if="_error">
-            <li class="list-disc">{{ _error }}</li>
+          <ul class="text-sm text-red-500 text-left" v-if="serverError">
+            <li class="list-disc">{{ serverError }}</li>
           </ul>
           <Button type="submit" class="w-full"> Login </Button>
         </form>
