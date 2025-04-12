@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { login } from '@/utils/supaAuth'
+import { watchDebounced } from '@vueuse/core'
 
 const router = useRouter()
 
@@ -14,6 +15,17 @@ const signin = async () => {
   if (!error) return router.push('/')
   handleServerError(error)
 }
+
+watchDebounced(
+  formData,
+  () => {
+    handleLoginForm(formData.value)
+  },
+  {
+    debounce: 1000,
+    deep: true
+  }
+)
 </script>
 
 <template>
@@ -34,7 +46,6 @@ const signin = async () => {
             <Label id="email" class="text-left">Email</Label>
             <Input
               v-model="formData.email"
-              @input="handleLoginForm(formData)"
               type="email"
               placeholder="johndoe19@example.com"
               required
@@ -53,7 +64,6 @@ const signin = async () => {
             </div>
             <Input
               v-model="formData.password"
-              @input="handleLoginForm(formData)"
               id="password"
               type="password"
               autocomplete
