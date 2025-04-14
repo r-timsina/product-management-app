@@ -15,7 +15,7 @@ export const useAuthStore = defineStore('auth-store', () => {
     }
 
     if (!profile.value || profile.value.id !== user.value.id) {
-      const data = await profileQuery(user.value.id) // data was destructured at first or as per per instruction but because of login error I mannually changed it to data. Need to solve further.
+      const { data } = await profileQuery(user.value.id)
       console.log(data)
       profile.value = data || null
     }
@@ -25,6 +25,7 @@ export const useAuthStore = defineStore('auth-store', () => {
     if (!userSession) {
       user.value = null
       profile.value = null
+
       return
     }
 

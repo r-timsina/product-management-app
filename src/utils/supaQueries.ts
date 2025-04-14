@@ -28,6 +28,6 @@ export const taskQuery = (id: string) =>
 
 export type Task = QueryData<ReturnType<typeof taskQuery>>
 
-export const profileQuery = (id: string) => {
-  supabase.from('profiles').select().eq('id', id).single()
+export const profileQuery = async (id: string) => {
+  return await supabase.from('profiles').select().eq('id', id).single()
 }
