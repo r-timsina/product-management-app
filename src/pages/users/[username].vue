@@ -30,7 +30,6 @@ await getTasks()
       <p class="mt-2 text-sm">
         {{ profile?.bio ? profile.bio : `As there is no bio. Let's assume this one` }}
       </p>
-      {{ username }}
     </div>
     <Button>Edit profile</Button>
   </div>
