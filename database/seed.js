@@ -6,7 +6,6 @@ import { createClient } from '@supabase/supabase-js'
 const supabase = createClient(process.env.VITE_SUPABASE_URL, process.env.SERVICE_ROLE_KEY)
 
 const testingUserEmail = process.env.TESTING_USER_EMAIL
-console.log(testingUserEmail)
 if (!testingUserEmail) {
   console.error('Have you forgot to add TESTING_USER_EMAIL to your .env file?')
   process.exit()

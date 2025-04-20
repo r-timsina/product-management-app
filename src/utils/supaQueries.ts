@@ -1,8 +1,15 @@
 import { supabase } from '@/lib/supabaseClient'
 import type { QueryData } from '@supabase/supabase-js'
 
-export const tasksWithProjectQuery = supabase.from('tasks').select(`*, projects(id,name,slug)`)
-export type tasksWithProjects = QueryData<typeof tasksWithProjectQuery>
+export const tasksWithProjectsQuery = supabase.from('tasks').select(`
+    *,
+    projects (
+      id,
+      name,
+      slug
+    )
+  `)
+export type TasksWithProjects = QueryData<typeof tasksWithProjectsQuery>
 
 export const projectsQuery = supabase.from('projects').select()
 export type Projects = QueryData<typeof projectsQuery>
@@ -11,23 +18,39 @@ export const projectQuery = (slug: string) =>
   supabase
     .from('projects')
     .select(
-      `*
-    tasks(
+      `
+   *,
+   tasks (
     id,
     name,
     status,
-    due_date)`
+    due_date
+   )
+  `
     )
     .eq('slug', slug)
     .single()
 
 export type Project = QueryData<ReturnType<typeof projectQuery>>
 
-export const taskQuery = (id: string) =>
-  supabase.from('tasks').select(`*, projects(id,name,slug)`).eq('id', id).single()
-
+export const taskQuery = (id: string) => {
+  return supabase
+    .from('tasks')
+    .select(
+      `
+      *,
+      projects (
+        id,
+        name,
+        slug
+      )
+    `
+    )
+    .eq('id', id)
+    .single()
+}
 export type Task = QueryData<ReturnType<typeof taskQuery>>
 
-export const profileQuery = async ({ column, value }: { column: string; value: string }) => {
-  return await supabase.from('profiles').select().eq(column, value).single()
+export const profileQuery = ({ column, value }: { column: string; value: string }) => {
+  return supabase.from('profiles').select().eq(column, value).single()
 }
